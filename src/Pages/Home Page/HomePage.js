@@ -10,23 +10,28 @@ import CreatePostModal from '../../Components/Modals/Create Post Modal';
 import { showMessage } from "react-native-flash-message";
 import Fonts from '../../Styles/Fonts';
 import parseContentData from '../../Utils/parseContentData';
+import storage from '@react-native-firebase/storage';
+
 const HomePage=({navigation})=>{
     const [sendPostLoadingStatus,setSendPostLoadingStatus]=useState(false);
     const user=auth().currentUser;
     const [createPostModalVisible,setCreatePostModalVisible]=useState(false);
     const [postsList,setPostList]=useState([]);
     const [userInfo,setUserInfo]=useState([]);
+    const [profilePhotoURL,setProfilePhotoURL]=useState(null);
     useEffect(()=>{
             database().ref('posts/').on('value', snapshot => {
             const data=snapshot.val();
             if(data!=null){
                 const parsedData=parseContentData(data);
                 setPostList(parsedData);
+             
             }
           });
 
           database().ref(`users/${user.uid}`).on('value', snapshot => {
             const userData=snapshot.val();
+            
             if(userData==null){
                const userInfo={
                 profilePhotoImageURL:'',
@@ -38,8 +43,17 @@ const HomePage=({navigation})=>{
             }
             else{
                 setUserInfo(userData);
+
+                if(userData["profilePhotoImageURL"]!=""){
+                    setProfilePhotoURL(userData["profilePhotoImageURL"]);
+                   
+                  }
+              
             }
           });
+
+
+        
 
           
 
@@ -63,19 +77,38 @@ const HomePage=({navigation})=>{
         setCreatePostModalVisible(!createPostModalVisible)
     }
    
-    async function handleSendPost(content,contentImageURL){
+    async function handleSendPost(content,imageResponse){
+        let imageName=null;
+        if(imageResponse!=null){
+            imageName=imageResponse.substring(imageResponse.lastIndexOf('/')+1);
+        }
+        
             try {
                 setSendPostLoadingStatus(true);
                 const post={
                     postText:content,
                     userName:user.email.split('@')[0],
                     date: (new Date()).toISOString(),
-                    postImage: contentImageURL,
+                    postImage: imageName,
                     likeNumber:0,
-                    creatorID: user.uid
+                    creatorID: user.uid,
+                   
                    
                  }
-                  await database().ref('posts/').push(post);     
+                 if(imageResponse!=null){
+                    const task=storage().ref(imageName).putFile(imageResponse);
+                    task.on('state_changed', taskSnapshot => {
+                        console.log(`${taskSnapshot.bytesTransferred} transferred out of ${taskSnapshot.totalBytes}`);
+                    });
+                    await task; 
+                 }
+                 
+  
+                  await database().ref('posts/').push(post);  
+                  
+                  
+                
+               
                   showMessage({
                     message: "Your post has been sent successfully.",
                     type: "success",
@@ -92,10 +125,11 @@ const HomePage=({navigation})=>{
                     type: "danger",
                     titleStyle:{fontFamily:Fonts.defaultBannerFontFamily},
                   });
+                  console.log(error);
             }
         
     }
-    const renderPost=({item})=><PostCard post={item} onLike={()=>handleLikePost(item,item.id)} user={userInfo}></PostCard>;
+    const renderPost=({item})=><PostCard post={item} onLike={()=>handleLikePost(item,item.id)} user={userInfo} profilePhotoURL={profilePhotoURL}></PostCard>;
     return(
         <View style={styles.container}>
             <View style={styles.profileContainer}>

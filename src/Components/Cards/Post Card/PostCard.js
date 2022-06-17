@@ -1,15 +1,17 @@
 import React,{useState,useEffect} from 'react';
-import { Text,View,Image,TouchableWithoutFeedback } from 'react-native';
+import { Text,View,Image,TouchableWithoutFeedback,ActivityIndicator } from 'react-native';
 import styles from './PostCard.style';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {formatDistance,parseISO} from 'date-fns';
-import Colors from '../../../Styles/Colors';
 import { useNavigation } from '@react-navigation/native';
 import database from '@react-native-firebase/database';
-const PostCard=({post,onLike,likeStatus})=>{
+import storage from '@react-native-firebase/storage';
+const PostCard=({post,onLike,profilePhotoURL})=>{
     const navigation = useNavigation();
     const [userInfo,setUserInfo]=useState([]);
+    const [imageUrl, setImageUrl] = useState(null);
     const formattedDate=formatDistance(parseISO(post.date), new Date(), { addSuffix: true });
+    console.log(profilePhotoURL+"  ppp url");
     useEffect(()=>{
     database().ref(`users/${post.creatorID}`).on('value', snapshot => {
     const userData=snapshot.val();  
@@ -17,6 +19,31 @@ const PostCard=({post,onLike,likeStatus})=>{
         setUserInfo(userData);
     }  
   });
+
+  if(post.postImage!=""){
+   
+    storage()
+      .ref('/' + post.postImage) //name in storage in firebase console
+      .getDownloadURL()
+      .then((url) => {
+        setImageUrl(url);
+      })
+      .catch((e) => console.log('Errors while downloading => ', e));
+    
+  }
+
+  if(profilePhotoURL!=""){
+    storage()
+            .ref('/' + profilePhotoURL) //name in storage in firebase console
+            .getDownloadURL()
+            .then((url) => {
+              setImageUrl(url);
+            })
+            .catch((e) => console.log('Errors while downloading => ', e));
+  }
+
+
+    
   
 },[]);
     return(
@@ -25,7 +52,7 @@ const PostCard=({post,onLike,likeStatus})=>{
                 <View style={styles.profileInfoContainer}>
                     <TouchableWithoutFeedback onPress={()=>navigation.navigate("Profile",{userID:post.creatorID})}>
                     <View style={styles.profilePhotoContainer}>
-                        {userInfo.profilePhotoImageURL ?  <Image source={{uri:userInfo.profilePhotoImageURL}} style={styles.profilePhotoContainer}></Image> : <Icon name='account-question' size={25}></Icon> }
+                        {profilePhotoURL ?  <Image source={{uri:profilePhotoURL}} style={styles.profilePhotoContainer}></Image> : <Icon name='account-question' size={25}></Icon> }
                                      
                     </View>
                     </TouchableWithoutFeedback>
@@ -36,7 +63,7 @@ const PostCard=({post,onLike,likeStatus})=>{
                 </View>
                 <View style={styles.contentContainer}>
                     {post.postText ? <Text style={styles.contentText}>{post.postText}</Text> : null}
-                    {post.postImage ? <Image source={{uri: post.postImage}} style={styles.imageContentContainer}></Image> : null} 
+                    {imageUrl ? <Image source={{uri: imageUrl}} style={styles.imageContentContainer}></Image> : null} 
                 </View>
                 <View style={styles.postLikeInfoContainer}>
                     <Icon name='thumb-up' size={25} onPress={onLike}></Icon>

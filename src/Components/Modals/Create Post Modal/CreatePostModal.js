@@ -9,6 +9,7 @@ import { launchImageLibrary} from 'react-native-image-picker';
 
 const CreatePostModal=({visible,onClose,onSend,loadingStatus})=>{
     const [pickerResponse, setPickerResponse] = useState(null);
+   
     const [text,setText]=useState('');
     const [isKeyboardVisible, setKeyboardVisible] = useState(false);
     const [inputError,setInputError]=useState(false);
@@ -20,6 +21,7 @@ const CreatePostModal=({visible,onClose,onSend,loadingStatus})=>{
       else{
         onSend(text,imageURL);
         setPickerResponse(null);
+      
         setText('');  
       }
             
@@ -40,6 +42,7 @@ const CreatePostModal=({visible,onClose,onSend,loadingStatus})=>{
       );
       return () => {
         setPickerResponse(null);
+        
         keyboardDidHideListener.remove();
         keyboardDidShowListener.remove();
       };
@@ -74,9 +77,10 @@ const CreatePostModal=({visible,onClose,onSend,loadingStatus})=>{
               console.log('User tapped custom button: ', response.customButton);
               alert(response.customButton);
             } else {
-                setPickerResponse(response.assets[0].uri);
-              // You can also display the image using data:
-              // let source = { uri: 'data:image/jpeg;base64,' + response.data };
+
+                const previewFileName=response.assets[0].uri;
+                setPickerResponse(previewFileName);
+               
               
             }
           });
@@ -94,13 +98,11 @@ const CreatePostModal=({visible,onClose,onSend,loadingStatus})=>{
                     
                     <MainButton isLoading={loadingStatus} buttonPlaceHolder="Send the post" buttonStyle="primary" onPress={()=>handleSendPost(text,pickerResponse)}></MainButton>
                     
-                    {pickerResponse && !isKeyboardVisible ? <Image source={{uri: pickerResponse}} style={styles.selectedContentImageStyle}></Image>:<Text></Text>}
+                    {pickerResponse&& !isKeyboardVisible ? <Image source={{uri: pickerResponse}} style={styles.selectedContentImageStyle}></Image>:<Text></Text>}
                 </View>
             </Modal>
            
     )
 }
-const createPostModalError={
 
-}
 export default CreatePostModal;

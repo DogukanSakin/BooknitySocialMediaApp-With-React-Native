@@ -6,19 +6,38 @@ import FavoritedBookCard from '../../Components/Cards/Favorited Book Card';
 import auth from '@react-native-firebase/auth';
 import database from '@react-native-firebase/database';
 import { launchImageLibrary} from 'react-native-image-picker';
+import storage from '@react-native-firebase/storage';
 const user=auth().currentUser;
 const ProfilePage=({route})=>{
+  const [imageUrl, setImageUrl] = useState(null);
     const {userID}=route.params;
     const [profileInfo,setProfileInfo]=useState([]);
+    const [profilePhotoURL,setProfilePhotoURL]=useState(null);
     useEffect(()=>{
         database().ref(`users/${userID}/`).on('value', snapshot => {
             const userData=snapshot.val();
             if(userData!=null){
                 setProfileInfo(userData);
+                if(userData["profilePhotoImageURL"]!=""){
+                  setProfilePhotoURL(userData["profilePhotoImageURL"]);
+                  console.log("pp:"+profilePhotoURL);
+                }
             
             }
           
         });
+    
+        if(profilePhotoURL){
+   
+          storage()
+            .ref('/' + profilePhotoURL) //name in storage in firebase console
+            .getDownloadURL()
+            .then((url) => {
+              setImageUrl(url);
+            })
+            .catch((e) => console.log('Errors while downloading => ', e));
+          
+        }
   
       
     },[]);
@@ -56,12 +75,23 @@ const ProfilePage=({route})=>{
                   console.log('User tapped custom button: ', response.customButton);
                   alert(response.customButton);
                 } else {
-                    database().ref(`users/${userID}/profilePhotoImageURL/`).set(response.assets[0].uri);
-                  // You can also display the image using data:
-                  // let source = { uri: 'data:image/jpeg;base64,' + response.data };
+                    const responseURI=response.assets[0].uri;
+                    const imageName=responseURI.substring(responseURI.lastIndexOf('/')+1);
+                    database().ref(`users/${userID}/profilePhotoImageURL/`).set(imageName);
+                    
+                    const task=storage().ref(imageName).putFile(responseURI);
+                    task.on('state_changed', taskSnapshot => {
+                        console.log(`${taskSnapshot.bytesTransferred} transferred out of ${taskSnapshot.totalBytes}`);
+                    });
+                    async()=>{
+                      await task;
+                    }
+                    
+                  
                   
                 }
               });
+              
              
         }
         
@@ -72,7 +102,7 @@ const ProfilePage=({route})=>{
                 <TouchableWithoutFeedback onPress={handleUploadProfilePhoto}>
                 <View style={styles.profilePhotoContainer}>
                     
-                    {profileInfo.profilePhotoImageURL ? <Image source={{uri: profileInfo.profilePhotoImageURL}} style={styles.profilePhotoContainer}></Image> : <Icon name='account-question' size={50}></Icon>}
+                    {imageUrl ? <Image source={{uri: imageUrl}} style={styles.profilePhotoContainer}></Image> : <Icon name='account-question' size={50}></Icon>}
                     {user.uid==userID ?  <View style={styles.addPhotoButtonContainer}><Icon name='plus' size={15} color='white'></Icon></View> : null }
                 </View>
                 </TouchableWithoutFeedback>
