@@ -43,9 +43,16 @@ const HomePage=({navigation})=>{
             }
             else{
                 setUserInfo(userData);
-
+              
                 if(userData["profilePhotoImageURL"]!=""){
-                    setProfilePhotoURL(userData["profilePhotoImageURL"]);
+                   
+                    storage()
+                    .ref('/' + userData["profilePhotoImageURL"]) //name in storage in firebase console
+                    .getDownloadURL()
+                    .then((url) => {
+                        setProfilePhotoURL(url);
+                    })
+                    .catch((e) => console.log('Errors while downloading => ', e));
                    
                   }
               
@@ -53,16 +60,6 @@ const HomePage=({navigation})=>{
           });
 
 
-        
-
-          
-
-
-         
-          
-
-
-       
           
          
     },[]);
@@ -129,13 +126,13 @@ const HomePage=({navigation})=>{
             }
         
     }
-    const renderPost=({item})=><PostCard post={item} onLike={()=>handleLikePost(item,item.id)} user={userInfo} profilePhotoURL={profilePhotoURL}></PostCard>;
+    const renderPost=({item})=><PostCard post={item} onLike={()=>handleLikePost(item,item.id)} user={userInfo}></PostCard>;
     return(
         <View style={styles.container}>
             <View style={styles.profileContainer}>
                 <View style={styles.profilePhotoContainer}>
                     <TouchableWithoutFeedback onPress={()=>navigation.navigate("Profile",{userID:user.uid})}>
-                        {userInfo.profilePhotoImageURL ? <Image source={{uri: userInfo.profilePhotoImageURL}} style={styles.profilePhotoContainer}></Image> : <Icon name='account-question' size={25}></Icon>}
+                        {profilePhotoURL ? <Image source={{uri: profilePhotoURL}} style={styles.profilePhotoContainer}></Image> : <Icon name='account-question' size={25}></Icon>}
                         
                     </TouchableWithoutFeedback>
                     

@@ -6,53 +6,64 @@ import {formatDistance,parseISO} from 'date-fns';
 import { useNavigation } from '@react-navigation/native';
 import database from '@react-native-firebase/database';
 import storage from '@react-native-firebase/storage';
-const PostCard=({post,onLike,profilePhotoURL})=>{
+const PostCard=({post,onLike})=>{
     const navigation = useNavigation();
-    const [userInfo,setUserInfo]=useState([]);
     const [imageUrl, setImageUrl] = useState(null);
+    const [userInfo,setUserInfo]=useState([]);
     const formattedDate=formatDistance(parseISO(post.date), new Date(), { addSuffix: true });
-    console.log(profilePhotoURL+"  ppp url");
+    const [userProfilePhoto,setUserProfilePhoto]=useState(null);
     useEffect(()=>{
     database().ref(`users/${post.creatorID}`).on('value', snapshot => {
     const userData=snapshot.val();  
     if(userData!=null){
         setUserInfo(userData);
+        
     }  
   });
 
   if(post.postImage!=""){
    
-    storage()
+     storage()
       .ref('/' + post.postImage) //name in storage in firebase console
       .getDownloadURL()
       .then((url) => {
         setImageUrl(url);
       })
       .catch((e) => console.log('Errors while downloading => ', e));
+   
+    
     
   }
 
-  if(profilePhotoURL!=""){
-    storage()
-            .ref('/' + profilePhotoURL) //name in storage in firebase console
-            .getDownloadURL()
-            .then((url) => {
-              setImageUrl(url);
-            })
-            .catch((e) => console.log('Errors while downloading => ', e));
+  if(userInfo["profilePhotoImageURL"]!=""){
+    
+       storage()
+      .ref('/' + userInfo["profilePhotoImageURL"]) //name in storage in firebase console
+      .getDownloadURL()
+      .then((url) => {
+        setUserProfilePhoto(url);
+      })
+      .catch((e) => console.log('Errors while downloading => ', e));
+    
+   
   }
+
+  
 
 
     
   
 },[]);
+
+
+
     return(
         <TouchableWithoutFeedback onLongPress={onLike}>
         <View style={styles.container}>
                 <View style={styles.profileInfoContainer}>
                     <TouchableWithoutFeedback onPress={()=>navigation.navigate("Profile",{userID:post.creatorID})}>
                     <View style={styles.profilePhotoContainer}>
-                        {profilePhotoURL ?  <Image source={{uri:profilePhotoURL}} style={styles.profilePhotoContainer}></Image> : <Icon name='account-question' size={25}></Icon> }
+                        {userProfilePhoto?  <Image source={{uri:userProfilePhoto}} style={styles.profilePhotoContainer}></Image> : <Icon name='account-question' size={25}></Icon> }
                                      
                     </View>
                     </TouchableWithoutFeedback>

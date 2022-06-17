@@ -7,41 +7,38 @@ import auth from '@react-native-firebase/auth';
 import database from '@react-native-firebase/database';
 import { launchImageLibrary} from 'react-native-image-picker';
 import storage from '@react-native-firebase/storage';
-const user=auth().currentUser;
+
 const ProfilePage=({route})=>{
-  const [imageUrl, setImageUrl] = useState(null);
     const {userID}=route.params;
+    const user=auth().currentUser;
+    console.log(userID);
     const [profileInfo,setProfileInfo]=useState([]);
     const [profilePhotoURL,setProfilePhotoURL]=useState(null);
     useEffect(()=>{
-        database().ref(`users/${userID}/`).on('value', snapshot => {
-            const userData=snapshot.val();
-            if(userData!=null){
-                setProfileInfo(userData);
-                if(userData["profilePhotoImageURL"]!=""){
-                  setProfilePhotoURL(userData["profilePhotoImageURL"]);
-                  console.log("pp:"+profilePhotoURL);
-                }
-            
-            }
-          
-        });
-    
-        if(profilePhotoURL){
-   
-          storage()
-            .ref('/' + profilePhotoURL) //name in storage in firebase console
-            .getDownloadURL()
-            .then((url) => {
-              setImageUrl(url);
-            })
-            .catch((e) => console.log('Errors while downloading => ', e));
-          
+      database().ref(`users/${userID}/`).on('value', snapshot => {
+        const userData=snapshot.val();
+        if(userData!=null){
+            setProfileInfo(userData);
+            setProfilePhotoURL(profileInfo["profilePhotoImageURL"])
+            fetchProfilePhoto(profilePhotoURL);
         }
-  
       
+    });
+    
     },[]);
-  
+    function fetchProfilePhoto(profilePhoto){
+      if(profilePhoto!=""){
+        console.log("download:"+profilePhoto);
+        storage()
+          .ref('/' +profilePhoto) //name in storage in firebase console
+          .getDownloadURL()
+          .then((url) => {
+            setProfilePhotoURL(url);
+          })
+          .catch((e) => console.log('Errors while downloading => ', e));
+        
+      }
+    }
     async function handleUploadProfilePhoto(){
         if(user.uid!=userID){
             return;
@@ -85,6 +82,7 @@ const ProfilePage=({route})=>{
                     });
                     async()=>{
                       await task;
+                      fetchProfilePhoto(imageName);
                     }
                     
                   
@@ -102,7 +100,7 @@ const ProfilePage=({route})=>{
                 <TouchableWithoutFeedback onPress={handleUploadProfilePhoto}>
                 <View style={styles.profilePhotoContainer}>
                     
-                    {imageUrl ? <Image source={{uri: imageUrl}} style={styles.profilePhotoContainer}></Image> : <Icon name='account-question' size={50}></Icon>}
+                    {profilePhotoURL? <Image source={{uri: profilePhotoURL}} style={styles.profilePhotoContainer}></Image> : <Icon name='account-question' size={50}></Icon>}
                     {user.uid==userID ?  <View style={styles.addPhotoButtonContainer}><Icon name='plus' size={15} color='white'></Icon></View> : null }
                 </View>
                 </TouchableWithoutFeedback>
