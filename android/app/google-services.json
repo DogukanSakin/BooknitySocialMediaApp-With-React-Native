@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "164520814831",
+    "firebase_url": "https://booknity-3b431-default-rtdb.firebaseio.com",
+    "project_id": "booknity-3b431",
+    "storage_bucket": "booknity-3b431.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:164520814831:android:977532a7c5c3bb6282531a",
+        "android_client_info": {
+          "package_name": "com.booknityapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "164520814831-4csfgs2qs3frt9f1685d061fmhkgcf31.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDaf0DbbQf8Nf2lI1xjYxIkc1mWSQX0u-A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "164520814831-4csfgs2qs3frt9f1685d061fmhkgcf31.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
