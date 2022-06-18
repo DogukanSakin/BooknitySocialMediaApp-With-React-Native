@@ -11,7 +11,6 @@ import storage from '@react-native-firebase/storage';
 const ProfilePage=({route})=>{
     const {userID}=route.params;
     const user=auth().currentUser;
-    console.log(userID);
     const [profileInfo,setProfileInfo]=useState([]);
     const [profilePhotoURL,setProfilePhotoURL]=useState(null);
     useEffect(()=>{
