@@ -28,7 +28,7 @@ const HomePage=({navigation})=>{
              
             }
           });
-
+          
           database().ref(`users/${user.uid}`).on('value', snapshot => {
             const userData=snapshot.val();
             

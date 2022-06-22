@@ -1,10 +1,9 @@
 import { StyleSheet,Dimensions } from 'react-native';
-import Colors from '../../../Styles/Colors';
 import Fonts from '../../../Styles/Fonts';
 const deviceSize=Dimensions.get('window');
 export default StyleSheet.create({
     container:{
-        backgroundColor:Colors.defaultGreyBackgroundColor,
+        backgroundColor:'white',
         padding:15,
         borderTopLeftRadius:10,
         borderTopRightRadius:10,

@@ -30,29 +30,32 @@ export default StyleSheet.create({
     buttonsContainer:{
         flexDirection:'row'
     },
-    buttonsInnerContainer:{
-        flex:1,
-        
-    },
+  
     addFavButtonStyle:{
         backgroundColor:Colors.defaultColor,
         padding:10,
         borderRadius:20,
+        margin:5,
+        flex:1,
+       
     },
     readingButtonStyle:{
         backgroundColor:Colors.defaultColor,
         padding:10,
-        borderRadius:20
+        borderRadius:20,
+        margin:5,
+        flex:1
     },
     buttonText:{
         fontFamily:Fonts.defaultFontFamily,
-        color:'white'
+        color:'white',
+        textAlign:'center'
     },
-
-})
-const baseButtonStyle=StyleSheet.create({
-    
-    buttonBackground:{
-        backgroundColor:Colors.defaultColor
+    bookNameText:{
+        fontFamily:Fonts.defaultBannerFontFamily,
+        textAlign:'center',
+        margin:10,
+       
     }
+
 })

@@ -21,7 +21,6 @@ const CreatePostModal=({visible,onClose,onSend,loadingStatus})=>{
       else{
         onSend(text,imageURL);
         setPickerResponse(null);
-      
         setText('');  
       }
             
