@@ -11,17 +11,21 @@ export default StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius:10,
+    
     },
     bookNameText:{
         fontFamily:Fonts.defaultFontFamily,
         fontSize:15,
         padding:10,
+  
+
     },
     buttonStyle:{
         backgroundColor:Colors.defaultColor,
         padding:10,
         borderRadius:20,
-        width:125
+        width:125,
+      
     },
     buttonPlaceholderTextStyle:{
         color:'white',

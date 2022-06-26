@@ -1,5 +1,5 @@
 import React,{useEffect,useState} from 'react';
-import { Text,View,Image,TouchableWithoutFeedback,ActivityIndicator } from 'react-native';
+import { Text,View,Image,TouchableWithoutFeedback,FlatList } from 'react-native';
 import styles from './ProfilePage.style';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import FavoritedBookCard from '../../Components/Cards/Favorited Book Card';
@@ -7,12 +7,16 @@ import auth from '@react-native-firebase/auth';
 import database from '@react-native-firebase/database';
 import { launchImageLibrary} from 'react-native-image-picker';
 import storage from '@react-native-firebase/storage';
-
+import parseContentData from '../../Utils/parseContentData';
+import { showMessage } from "react-native-flash-message";
+import Fonts from '../../Styles/Fonts';
 const ProfilePage=({route})=>{
     const {userID}=route.params;
     const user=auth().currentUser;
     const [profileInfo,setProfileInfo]=useState([]);
     const [profilePhotoURL,setProfilePhotoURL]=useState(null);
+    const [userFavBooks,setUserFavBooks]=useState([]);
+
     useEffect(()=>{
       database().ref(`users/${userID}/`).on('value', snapshot => {
         const userData=snapshot.val();
@@ -23,11 +27,46 @@ const ProfilePage=({route})=>{
         }
       
     });
-    
+    if(userID==user.uid){
+  
+      database().ref(`favBooks/${user.uid}/`).on('value', snapshot => {
+        const data=snapshot.val();
+        if(data!=null){
+            const parsedData=parseContentData(data);
+            setUserFavBooks(parsedData);
+       
+        }
+       
+      });
+    }
+    else{
+      database().ref(`favBooks/${userID}/`).on('value', snapshot => {
+        const data=snapshot.val();
+        if(data!=null){
+            const parsedData=parseContentData(data);
+            setUserFavBooks(parsedData);
+        
+        }
+       
+      });
+    }
+   
     },[]);
+    function handleAddFavBook(bookName){
+
+      database().ref(`favBooks/${user.uid}/`).push({bookName:bookName});
+      showMessage({
+       message: "The book  successfully added your favs.",
+       type: "success",
+       titleStyle:{fontFamily:Fonts.defaultBannerFontFamily},
+     });
+  }
+  function handleRemoveFavBook(bookName){
+      onRemoveFavBook(bookName);
+  }
     function fetchProfilePhoto(profilePhoto){
       if(profilePhoto!=""){
-        console.log("download:"+profilePhoto);
+     
         storage()
           .ref('/' +profilePhoto) //name in storage in firebase console
           .getDownloadURL()
@@ -93,6 +132,7 @@ const ProfilePage=({route})=>{
         }
         
     }
+    const renderFavBook=({item})=><FavoritedBookCard favBook={item} onAddFavBook={handleAddFavBook}></FavoritedBookCard>;
     return(
         <View style={styles.container}>
             <View style={styles.profileInfoContainer}>
@@ -107,7 +147,10 @@ const ProfilePage=({route})=>{
                 { profileInfo.readingBookName!="" ? <Text style={styles.bookNameText}>{profileInfo.readingBookName}</Text> : <Text style={styles.bookNameText}>{profileInfo.userName} isn't reading a book yet!</Text> }
  
             </View>
-            <FavoritedBookCard></FavoritedBookCard>
+            <FlatList
+            data={userFavBooks}
+            renderItem={renderFavBook}></FlatList>
+            
         </View>
 
     )
