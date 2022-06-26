@@ -9,23 +9,79 @@ import database from '@react-native-firebase/database';
 import { showMessage } from "react-native-flash-message";
 import Fonts from '../../Styles/Fonts';
 import parseContentData from '../../Utils/parseContentData';
+import auth from '@react-native-firebase/auth';
 const SearchBookPage=()=>{
     const [addBookModalVisible,setAddBookModalVisible]=useState(false);
     const [addBookLoadingStatus,setAddBookLoadingStatus]=useState(false);
     const [bookList,setBookList]=useState([]);
     const [filteredBookList,setFilteredBookList]=useState([]);
+    const [bookCardReadingBookChangeLoadingStatus,setBookCardReadingBookChangeLoadingStatus]=useState(false);
+    const [bookCardAddFavBookLoadingStatus,setBookCardAddFavBookLoadingStatus]=useState(false);
+    const user=auth().currentUser;
     useEffect(()=>{
         database().ref('books/').on('value', snapshot => {
             const data=snapshot.val();
             if(data!=null){
                 const parsedData=parseContentData(data);
                 setBookList(parsedData);
-               
             }
-          });
-          
-        
+          }); 
     },[]);
+    async function handleAddFavThisBook(bookName){
+        try {
+            setBookCardAddFavBookLoadingStatus(true);
+            await database().ref(`favBooks/${user.uid}/`)
+            .orderByChild('bookName')
+            .equalTo(bookName)
+            .once('value')
+            .then(snapshot => {
+              if (snapshot.exists()) {
+                showMessage({
+                    message: "The book is already added to your favs.",
+                    type: "info",
+                    titleStyle:{fontFamily:Fonts.defaultBannerFontFamily},
+                  });
+                  setBookCardAddFavBookLoadingStatus(false);
+              } else {
+                database().ref(`favBooks/${user.uid}/`).push({bookName:bookName});
+                showMessage({
+                 message: "The book  successfully added your favs.",
+                 type: "success",
+                 titleStyle:{fontFamily:Fonts.defaultBannerFontFamily},
+               });
+                setBookCardAddFavBookLoadingStatus(false);
+                
+              }
+          });
+        } catch (error) {
+            showMessage({
+                message: "Opps! There is an error...",
+                type: "danger",
+                titleStyle:{fontFamily:Fonts.defaultBannerFontFamily},
+              });
+            setBookCardAddFavBookLoadingStatus(false);
+        }
+    }
+    async function handleReadingThisBook(bookName){
+        try {
+            setBookCardReadingBookChangeLoadingStatus(true);
+            await database().ref(`users/${user.uid}/readingBookName/`).set(bookName);
+            showMessage({
+             message: "Your reading book has been successfully changed. ",
+             type: "success",
+             titleStyle:{fontFamily:Fonts.defaultBannerFontFamily},
+           });
+           setBookCardReadingBookChangeLoadingStatus(false);
+        } catch (error) {
+            showMessage({
+                message: "Opps! There is an error...",
+                type: "danger",
+                titleStyle:{fontFamily:Fonts.defaultBannerFontFamily},
+              });
+              setBookCardReadingBookChangeLoadingStatus(false);
+        }
+       
+    }
     function handleSearchBooks(searchedBookName){
         if(searchedBookName==""){
             setFilteredBookList([]);
@@ -40,9 +96,6 @@ const SearchBookPage=()=>{
             setFilteredBookList(result);
         }
       
-       
-       
-
     }
     function handleAddBookModalVisible(){
         setAddBookModalVisible(!addBookModalVisible);
@@ -51,8 +104,7 @@ const SearchBookPage=()=>{
         const book={
             name:content.bookName,
             author:content.bookAuthor,
-            reader:0,
-            fav:0,
+          
         }
         try {
             setAddBookLoadingStatus(true);
@@ -77,7 +129,7 @@ const SearchBookPage=()=>{
               setAddBookModalVisible(false);
         }
     }
-    const renderBookList=({item})=><BookCard book={item}></BookCard>;
+    const renderBookList=({item})=><BookCard book={item} onReadingThisBook={handleReadingThisBook} onAddFavThisBook={handleAddFavThisBook} readingBookLoadingStatus={bookCardReadingBookChangeLoadingStatus} addFavLoadingStatus={bookCardAddFavBookLoadingStatus}></BookCard>;
     return(
         <View style={styles.container}>
                 <View style={styles.searchInputBoxStyle}>

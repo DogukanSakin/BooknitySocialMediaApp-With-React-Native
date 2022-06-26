@@ -1,24 +1,29 @@
 import React from 'react';
-import { Text,View,TouchableOpacity } from 'react-native';
+import { Text,View,TouchableOpacity,ActivityIndicator } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import styles from './BookCard.style';
-const BookCard =({book})=>{
-  
+const BookCard =({book,onReadingThisBook,onAddFavThisBook,readingBookLoadingStatus,addFavLoadingStatus})=>{
+    function handleReadingThisBook(bookName){
+        onReadingThisBook(bookName);
+    }
+    function handleAddFavThisBook(bookName){
+        onAddFavThisBook(bookName);
+    }
     return(
         <View style={styles.container}>
             <Text style={styles.bookNameText}>{book.name}</Text>
             <View style={styles.bookInfoContainer}>
-                <Icon name='account-outline' size={20}></Icon>
-                <Text style={styles.bookInfoText}>{book.reader}</Text>
-                <Text style={styles.bookInfoText}>{book.author}</Text>
-                <Text style={styles.bookInfoText}>{book.fav}</Text>
-                <Icon name='heart' size={20}></Icon>
+                <Text style={styles.bookInfoText}>{book.author}</Text> 
             </View>
             
             <View style={styles.horizontalLine}/>
             <View style={styles.buttonsContainer}>
-            <TouchableOpacity style={styles.readingButtonStyle}><Text style={styles.buttonText}>I’m reading this book</Text></TouchableOpacity>
-                <TouchableOpacity style={styles.addFavButtonStyle}><Text style={styles.buttonText}>Add favorites</Text></TouchableOpacity>
+                <TouchableOpacity style={styles.readingButtonStyle} onPress={()=>handleReadingThisBook(book.name)}>
+                    {readingBookLoadingStatus ? <ActivityIndicator color='white' size={15}></ActivityIndicator> : <Text style={styles.buttonText}>I’m reading this book</Text>}
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.addFavButtonStyle} onPress={()=>handleAddFavThisBook(book.name)}>
+                    {addFavLoadingStatus? <ActivityIndicator color='white' size={15}></ActivityIndicator> : <Text style={styles.buttonText}>Add favorites</Text>}
+                </TouchableOpacity>
             </View>
         </View>
     )
