@@ -149,7 +149,7 @@ const HomePage=({navigation})=>{
             </View>
             <View style={styles.horizontalLine}/>
             <FlatList renderItem={renderPost} data={postsList}></FlatList>
-            <FloatingButton onPress={handleCreatePostModalClose} />
+            <FloatingButton onPress={handleCreatePostModalClose} iconName='pencil-plus'/>
             <CreatePostModal loadingStatus={sendPostLoadingStatus} visible={createPostModalVisible} onClose={handleCreatePostModalClose} onSend={handleSendPost}></CreatePostModal>
            
            

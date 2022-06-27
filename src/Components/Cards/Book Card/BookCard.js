@@ -1,6 +1,5 @@
 import React from 'react';
 import { Text,View,TouchableOpacity,ActivityIndicator } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import styles from './BookCard.style';
 const BookCard =({book,onReadingThisBook,onAddFavThisBook,readingBookLoadingStatus,addFavLoadingStatus})=>{
     function handleReadingThisBook(bookName){

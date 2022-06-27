@@ -1,7 +1,6 @@
 import React,{useState,useEffect} from 'react';
 import { View,TextInput,FlatList } from 'react-native';
 import styles from './SearchBookPage.style';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import BookCard from '../../Components/Cards/Book Card';
 import FloatingButton from '../../Components/Floating Button';
 import AddBookModal from '../../Components/Modals/Add Book Modal';
@@ -10,6 +9,7 @@ import { showMessage } from "react-native-flash-message";
 import Fonts from '../../Styles/Fonts';
 import parseContentData from '../../Utils/parseContentData';
 import auth from '@react-native-firebase/auth';
+import SearchInput from '../../Components/Inputs/SearchInput';
 const SearchBookPage=()=>{
     const [addBookModalVisible,setAddBookModalVisible]=useState(false);
     const [addBookLoadingStatus,setAddBookLoadingStatus]=useState(false);
@@ -124,7 +124,7 @@ const SearchBookPage=()=>{
                 type: "danger",
                 titleStyle:{fontFamily:Fonts.defaultBannerFontFamily},
               });
-              console.log(error);
+         
               setAddBookLoadingStatus(false);
               setAddBookModalVisible(false);
         }
@@ -132,14 +132,11 @@ const SearchBookPage=()=>{
     const renderBookList=({item})=><BookCard book={item} onReadingThisBook={handleReadingThisBook} onAddFavThisBook={handleAddFavThisBook} readingBookLoadingStatus={bookCardReadingBookChangeLoadingStatus} addFavLoadingStatus={bookCardAddFavBookLoadingStatus}></BookCard>;
     return(
         <View style={styles.container}>
-                <View style={styles.searchInputBoxStyle}>
-                   <Icon name='magnify' size={25}></Icon>
-                   <TextInput placeholder='Search book...' style={styles.inputBox} onChangeText={handleSearchBooks}></TextInput>
-                </View>
+                <SearchInput onType={handleSearchBooks} inputPlaceHolder='Search books...'></SearchInput>
                <FlatList
                data={filteredBookList}
                renderItem={renderBookList}></FlatList>
-               <FloatingButton onPress={handleAddBookModalVisible}></FloatingButton>
+               <FloatingButton onPress={handleAddBookModalVisible} iconName='book-plus'></FloatingButton>
                <AddBookModal loadingStatus={addBookLoadingStatus} visible={addBookModalVisible} onClose={handleAddBookModalVisible} onSend={handleAddBook}></AddBookModal>
 
         </View>

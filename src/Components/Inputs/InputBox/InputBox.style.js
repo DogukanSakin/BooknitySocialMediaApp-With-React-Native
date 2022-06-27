@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
-import Colors from '../../Styles/Colors';
-import Fonts from '../../Styles/Fonts';
+import Colors from '../../../Styles/Colors';
+
 export default StyleSheet.create({
     container:{
         flexDirection:'row',

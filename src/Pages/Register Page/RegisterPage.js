@@ -2,7 +2,7 @@ import React,{useState} from 'react';
 import { Text,View } from 'react-native';
 import styles from './RegisterPage.style';
 import Logo from '../../Components/Logo';
-import InputBox from '../../Components/InputBox';
+import InputBox from '../../Components/Inputs/InputBox';
 import MainButton from '../../Components/Main Button';
 import { Formik } from 'formik';
 import auth from '@react-native-firebase/auth';

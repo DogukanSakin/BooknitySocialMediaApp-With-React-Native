@@ -23,7 +23,10 @@ const ProfilePage=({route})=>{
         if(userData!=null){
             setProfileInfo(userData);
             setProfilePhotoURL(profileInfo["profilePhotoImageURL"])
-            fetchProfilePhoto(profilePhotoURL);
+            if(profileInfo["profilePhotoImageURL"]!=""){
+              fetchProfilePhoto(profileInfo["profilePhotoImageURL"]);
+            }
+            
         }
       
     });
@@ -33,7 +36,7 @@ const ProfilePage=({route})=>{
         if(data!=null){
             const parsedData=parseContentData(data);
             setUserFavBooks(parsedData);
-            console.log(parsedData)
+       
         }
         else{
           setUserFavBooks([]);
@@ -46,7 +49,7 @@ const ProfilePage=({route})=>{
     },[]);
     function handleAddFavBook(bookName,id){
 
-      database().ref(`favBooks/${user.uid}/id`).set({bookName:bookName});
+      database().ref(`favBooks/${user.uid}/${id}`).set({bookName:bookName});
       showMessage({
        message: "The book  successfully added your favs.",
        type: "success",
@@ -57,17 +60,14 @@ const ProfilePage=({route})=>{
     database().ref(`favBooks/${user.uid}/${id}`).remove();
   }
     function fetchProfilePhoto(profilePhoto){
-      if(profilePhoto!=""){
-     
         storage()
-          .ref('/' +profilePhoto) //name in storage in firebase console
+          .ref('/' +profilePhoto) 
           .getDownloadURL()
           .then((url) => {
             setProfilePhotoURL(url);
           })
           .catch((e) => console.log('Errors while downloading => ', e));
-        
-      }
+      
     }
     async function handleUploadProfilePhoto(){
         if(user.uid!=userID){

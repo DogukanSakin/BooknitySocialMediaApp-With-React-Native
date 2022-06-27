@@ -12,4 +12,5 @@ export default StyleSheet.create({
         justifyContent:'center',
         backgroundColor:Colors.defaultColor
     },
+
 })

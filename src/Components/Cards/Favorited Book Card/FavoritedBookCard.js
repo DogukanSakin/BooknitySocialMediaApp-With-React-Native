@@ -12,7 +12,7 @@ const FavoritedBookCard=({favBook,onAddFavBook,onRemoveFavBook})=>{
         fetchCurrentUserFavBooks();
     },[]);
     function fetchCurrentUserFavBooks(){
-        console.log("fetch data")
+      
         database().ref(`favBooks/${user.uid}/`)
             .orderByChild('bookName')
             .equalTo(favBook.bookName)

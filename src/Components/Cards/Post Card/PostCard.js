@@ -1,5 +1,5 @@
 import React,{useState,useEffect} from 'react';
-import { Text,View,Image,TouchableWithoutFeedback,ActivityIndicator } from 'react-native';
+import { Text,View,Image,TouchableWithoutFeedback } from 'react-native';
 import styles from './PostCard.style';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {formatDistance,parseISO} from 'date-fns';

@@ -2,7 +2,7 @@ import React from 'react';
 import {TextInput,View } from 'react-native';
 import styles from './InputBox.style';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
-import Colors from '../../Styles/Colors';
+import Colors from '../../../Styles/Colors';
 
 const InputBox=({placeholder,iconName,isPassword,inputValue,onType})=>{
     return(
