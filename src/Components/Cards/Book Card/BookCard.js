@@ -6,8 +6,8 @@ const BookCard =({book,onReadingThisBook,onAddFavThisBook,readingBookLoadingStat
     function handleReadingThisBook(bookName){
         onReadingThisBook(bookName);
     }
-    function handleAddFavThisBook(bookName){
-        onAddFavThisBook(bookName);
+    function handleAddFavThisBook(bookName,id){
+        onAddFavThisBook(bookName,id);
     }
     return(
         <View style={styles.container}>
@@ -21,7 +21,7 @@ const BookCard =({book,onReadingThisBook,onAddFavThisBook,readingBookLoadingStat
                 <TouchableOpacity style={styles.readingButtonStyle} onPress={()=>handleReadingThisBook(book.name)}>
                     {readingBookLoadingStatus ? <ActivityIndicator color='white' size={15}></ActivityIndicator> : <Text style={styles.buttonText}>I’m reading this book</Text>}
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.addFavButtonStyle} onPress={()=>handleAddFavThisBook(book.name)}>
+                <TouchableOpacity style={styles.addFavButtonStyle} onPress={()=>handleAddFavThisBook(book.name,book.id)}>
                     {addFavLoadingStatus? <ActivityIndicator color='white' size={15}></ActivityIndicator> : <Text style={styles.buttonText}>Add favorites</Text>}
                 </TouchableOpacity>
             </View>

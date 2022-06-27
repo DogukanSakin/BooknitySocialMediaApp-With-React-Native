@@ -27,7 +27,7 @@ const SearchBookPage=()=>{
             }
           }); 
     },[]);
-    async function handleAddFavThisBook(bookName){
+    async function handleAddFavThisBook(bookName,id){
         try {
             setBookCardAddFavBookLoadingStatus(true);
             await database().ref(`favBooks/${user.uid}/`)
@@ -43,7 +43,7 @@ const SearchBookPage=()=>{
                   });
                   setBookCardAddFavBookLoadingStatus(false);
               } else {
-                database().ref(`favBooks/${user.uid}/`).push({bookName:bookName});
+                database().ref(`favBooks/${user.uid}/${id}`).set({bookName:bookName});
                 showMessage({
                  message: "The book  successfully added your favs.",
                  type: "success",

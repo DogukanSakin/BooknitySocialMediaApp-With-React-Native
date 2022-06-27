@@ -7,8 +7,12 @@ import database from '@react-native-firebase/database';
 const FavoritedBookCard=({favBook,onAddFavBook,onRemoveFavBook})=>{
     const user=auth().currentUser;
     const [isAlreadyAddedFav,setIsAlreadyAddedFav]=useState(false);
-
+    
     useEffect(()=>{
+        fetchCurrentUserFavBooks();
+    },[]);
+    function fetchCurrentUserFavBooks(){
+        console.log("fetch data")
         database().ref(`favBooks/${user.uid}/`)
             .orderByChild('bookName')
             .equalTo(favBook.bookName)
@@ -20,18 +24,20 @@ const FavoritedBookCard=({favBook,onAddFavBook,onRemoveFavBook})=>{
                 setIsAlreadyAddedFav(false);   
               }
           });
-    },[]);
-    function handleAddFavBook(bookName){
-        onAddFavBook(bookName);
     }
-    function handleRemoveFavBook(bookName){
-        onRemoveFavBook(bookName);
+    function handleAddFavBook(bookName,id){
+        onAddFavBook(bookName,id);
+        fetchCurrentUserFavBooks();
+    }
+    function handleRemoveFavBook(bookName,id){
+        onRemoveFavBook(bookName,id);
+        fetchCurrentUserFavBooks();
     }
     return(
         <View style={styles.container}>
             <Icon name='heart' size={20}></Icon>
             <Text style={styles.bookNameText}>{favBook.bookName}</Text>
-            {isAlreadyAddedFav? <TouchableOpacity style={styles.buttonStyle} onPress={()=>handleRemoveFavBook(favBook.bookName)}><Text style={styles.buttonPlaceholderTextStyle}>Remove Favorites</Text></TouchableOpacity> : <TouchableOpacity style={styles.buttonStyle} onPress={()=>handleAddFavBook(favBook.bookName)}><Text style={styles.buttonPlaceholderTextStyle}>Add favorites</Text></TouchableOpacity>}
+            {isAlreadyAddedFav? <TouchableOpacity style={styles.buttonStyle} onPress={()=>handleRemoveFavBook(favBook.bookName,favBook.id)}><Text style={styles.buttonPlaceholderTextStyle}>Remove Favorites</Text></TouchableOpacity> : <TouchableOpacity style={styles.buttonStyle} onPress={()=>handleAddFavBook(favBook.bookName,favBook.id)}><Text style={styles.buttonPlaceholderTextStyle}>Add favorites</Text></TouchableOpacity>}
             
            
         </View>

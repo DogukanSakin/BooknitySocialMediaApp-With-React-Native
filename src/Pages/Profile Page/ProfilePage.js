@@ -27,42 +27,34 @@ const ProfilePage=({route})=>{
         }
       
     });
-    if(userID==user.uid){
   
-      database().ref(`favBooks/${user.uid}/`).on('value', snapshot => {
-        const data=snapshot.val();
-        if(data!=null){
-            const parsedData=parseContentData(data);
-            setUserFavBooks(parsedData);
-       
-        }
-       
-      });
-    }
-    else{
       database().ref(`favBooks/${userID}/`).on('value', snapshot => {
         const data=snapshot.val();
         if(data!=null){
             const parsedData=parseContentData(data);
             setUserFavBooks(parsedData);
-        
+            console.log(parsedData)
+        }
+        else{
+          setUserFavBooks([]);
         }
        
       });
-    }
+    
+    
    
     },[]);
-    function handleAddFavBook(bookName){
+    function handleAddFavBook(bookName,id){
 
-      database().ref(`favBooks/${user.uid}/`).push({bookName:bookName});
+      database().ref(`favBooks/${user.uid}/id`).set({bookName:bookName});
       showMessage({
        message: "The book  successfully added your favs.",
        type: "success",
        titleStyle:{fontFamily:Fonts.defaultBannerFontFamily},
      });
   }
-  function handleRemoveFavBook(bookName){
-      onRemoveFavBook(bookName);
+  function handleRemoveFavBook(bookName,id){
+    database().ref(`favBooks/${user.uid}/${id}`).remove();
   }
     function fetchProfilePhoto(profilePhoto){
       if(profilePhoto!=""){
@@ -132,26 +124,28 @@ const ProfilePage=({route})=>{
         }
         
     }
-    const renderFavBook=({item})=><FavoritedBookCard favBook={item} onAddFavBook={handleAddFavBook}></FavoritedBookCard>;
+    const renderFavBook=({item})=><FavoritedBookCard favBook={item} onAddFavBook={handleAddFavBook} onRemoveFavBook={handleRemoveFavBook}></FavoritedBookCard>;
     return(
         <View style={styles.container}>
             <View style={styles.profileInfoContainer}>
                 <TouchableWithoutFeedback onPress={handleUploadProfilePhoto}>
                 <View style={styles.profilePhotoContainer}>
-                    
                     {profilePhotoURL? <Image source={{uri: profilePhotoURL}} style={styles.profilePhotoContainer}></Image> : <Icon name='account-question' size={50}></Icon>}
                     {user.uid==userID ?  <View style={styles.addPhotoButtonContainer}><Icon name='plus' size={15} color='white'></Icon></View> : null }
                 </View>
                 </TouchableWithoutFeedback>
                 <Text style={styles.userNameText}>{profileInfo.userName}</Text>
                 { profileInfo.readingBookName!="" ? <Text style={styles.bookNameText}>{profileInfo.readingBookName}</Text> : <Text style={styles.bookNameText}>{profileInfo.userName} isn't reading a book yet!</Text> }
- 
             </View>
             <FlatList
             data={userFavBooks}
-            renderItem={renderFavBook}></FlatList>
+            renderItem={renderFavBook}
+            numColumns={2}
+           
+            ></FlatList>
             
         </View>
+        
 
     )
 }

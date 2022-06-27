@@ -4,7 +4,9 @@ import Fonts from '../../Styles/Fonts';
 export default StyleSheet.create({
     container:{
         flex:1,
-        backgroundColor:'white'
+        backgroundColor:'white',
+        justifyContent:'center',
+        alignItems:'center',
     },
     profileInfoContainer:{
         alignItems:'center',
