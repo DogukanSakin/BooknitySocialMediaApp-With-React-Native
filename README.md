@@ -18,7 +18,7 @@ This app is a simple social media app developed using the Firebase database wher
 - [React Native Flash Message](https://github.com/lucasferreira/react-native-flash-message) for notifications
 - [React Native Modal](https://reactnative.dev/docs/modal) for bottom screen
 - [React Native Formik](https://formik.org/docs/guides/react-native) for sign in/up
-- [Date FNS](https://date-fns.org/) for calculate message sending time
+- [Date FNS](https://date-fns.org/) for calculate post sending time, message sending time etc.
 - [React Native Image Picker](https://github.com/react-native-image-picker/react-native-image-picker) for select and upload images
 
 ## Real Android Device ScreenShots
