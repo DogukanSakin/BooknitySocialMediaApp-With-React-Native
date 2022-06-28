@@ -22,20 +22,20 @@ This app is a simple social media app developed using the Firebase database wher
 - [React Native Image Picker](https://github.com/react-native-image-picker/react-native-image-picker) for select and upload images
 
 ## Real Android Device ScreenShots
-<img src="https://user-images.githubusercontent.com/86911611/176185221-b552405d-5e26-4be8-b693-12f1a4ba3340.jpg" width="420" height="800" /><img/>
-<img src="https://user-images.githubusercontent.com/86911611/176185430-7a9532e9-d34a-4d18-9425-301c24a05baa.jpg" width="420" height="800" /><img/>
-<img src="https://user-images.githubusercontent.com/86911611/176185535-80cabfbe-9c33-4974-91ec-1d09380229d6.jpg" width="420" height="800" /><img/>
-<img src="https://user-images.githubusercontent.com/86911611/176185540-19aab0e5-a7dc-49d5-abf8-6a9af58c0eb3.jpg" width="420" height="800" /><img/>
-<img src="https://user-images.githubusercontent.com/86911611/176185551-e6b8de78-7ccf-46d0-be26-ddf43e1b44de.jpg" width="420" height="800" /><img/>
-<img src="https://user-images.githubusercontent.com/86911611/176185573-5ed6c11a-7f4c-4e66-98df-df1690db1758.jpg" width="420" height="800" /><img/>
-<img src="https://user-images.githubusercontent.com/86911611/176185587-131e93d6-0f93-4f64-8d05-36d2d8f4f137.jpg" width="420" height="800" /><img/>
-<img src="https://user-images.githubusercontent.com/86911611/176185596-55107fb4-e5cc-4a1d-83db-e0d34b78e528.jpg" width="420" height="800" /><img/>
-<img src="https://user-images.githubusercontent.com/86911611/176185622-1f3ebce9-4b48-44d6-8a12-8f4988531a8e.jpg" width="420" height="800" /><img/>
-<img src="https://user-images.githubusercontent.com/86911611/176185630-0230a11f-036c-4f89-8d13-e1ed25e0662b.jpg" width="420" height="800" /><img/>
-<img src="https://user-images.githubusercontent.com/86911611/176185637-1777ac74-91cd-460c-a92c-fb162eb280c1.jpg" width="420" height="800" /><img/>
-<img src="https://user-images.githubusercontent.com/86911611/176185649-b3a71b1e-7c2c-4c90-bb83-77c396b786e4.jpg" width="420" height="800" /><img/>
-<img src="https://user-images.githubusercontent.com/86911611/176185664-daacad0e-dac7-4b95-9e11-3c97de798bbe.jpg" width="420" height="800" /><img/>
-<img src="https://user-images.githubusercontent.com/86911611/176185681-0353d2ff-ec27-4d53-ad5d-668afa86a7a2.jpg" width="420" height="800" /><img/>
+<img src="https://user-images.githubusercontent.com/86911611/176185221-b552405d-5e26-4be8-b693-12f1a4ba3340.jpg" width="410" height="800" /><img/>
+<img src="https://user-images.githubusercontent.com/86911611/176185430-7a9532e9-d34a-4d18-9425-301c24a05baa.jpg" width="410" height="800" /><img/>
+<img src="https://user-images.githubusercontent.com/86911611/176185535-80cabfbe-9c33-4974-91ec-1d09380229d6.jpg" width="410" height="800" /><img/>
+<img src="https://user-images.githubusercontent.com/86911611/176185540-19aab0e5-a7dc-49d5-abf8-6a9af58c0eb3.jpg" width="410" height="800" /><img/>
+<img src="https://user-images.githubusercontent.com/86911611/176185551-e6b8de78-7ccf-46d0-be26-ddf43e1b44de.jpg" width="410" height="800" /><img/>
+<img src="https://user-images.githubusercontent.com/86911611/176185573-5ed6c11a-7f4c-4e66-98df-df1690db1758.jpg" width="410" height="800" /><img/>
+<img src="https://user-images.githubusercontent.com/86911611/176185587-131e93d6-0f93-4f64-8d05-36d2d8f4f137.jpg" width="410" height="800" /><img/>
+<img src="https://user-images.githubusercontent.com/86911611/176185596-55107fb4-e5cc-4a1d-83db-e0d34b78e528.jpg" width="410" height="800" /><img/>
+<img src="https://user-images.githubusercontent.com/86911611/176185622-1f3ebce9-4b48-44d6-8a12-8f4988531a8e.jpg" width="410" height="800" /><img/>
+<img src="https://user-images.githubusercontent.com/86911611/176185630-0230a11f-036c-4f89-8d13-e1ed25e0662b.jpg" width="410" height="800" /><img/>
+<img src="https://user-images.githubusercontent.com/86911611/176185637-1777ac74-91cd-460c-a92c-fb162eb280c1.jpg" width="410" height="800" /><img/>
+<img src="https://user-images.githubusercontent.com/86911611/176185649-b3a71b1e-7c2c-4c90-bb83-77c396b786e4.jpg" width="410" height="800" /><img/>
+<img src="https://user-images.githubusercontent.com/86911611/176185664-daacad0e-dac7-4b95-9e11-3c97de798bbe.jpg" width="410" height="800" /><img/>
+<img src="https://user-images.githubusercontent.com/86911611/176185681-0353d2ff-ec27-4d53-ad5d-668afa86a7a2.jpg" width="410" height="800" /><img/>
 ## Installation
 
 Clone this repository on your local machine.
