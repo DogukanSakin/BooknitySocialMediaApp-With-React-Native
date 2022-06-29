@@ -20,7 +20,6 @@ const UserCard=({user})=>{
 
 
     },[]);
-    
     return(
         <View style={styles.container}>
             <View style={styles.userInfoContainer}>
@@ -28,10 +27,10 @@ const UserCard=({user})=>{
                     {userProfilePhotoURL? <View style={styles.imageInnerContainer}><Image source={{uri:userProfilePhotoURL}} style={styles.profilePhotoContainer}></Image></View> : <Icon name='account-question' size={25} style={{flex:1}}></Icon>}
                 </TouchableWithoutFeedback>
                 <Text style={styles.userNameText}>{user.userName}</Text>
-                {user.readingBookName ? <Text style={styles.bookNameText}>{user.readingBookName}</Text> : ""}
+                {user.readingBookName ? <Text style={styles.bookNameText}>{user.readingBookName}</Text> : null}
                 
             </View>
-            <TouchableOpacity style={styles.sendMessageButtonContainer}><Text style={styles.sendMessageButtonText}>Send Message</Text></TouchableOpacity>
+            <TouchableOpacity style={styles.sendMessageButtonContainer} onPress={()=>navigation.navigate("Chat",{targetUser:user})}><Text style={styles.sendMessageButtonText}>Send Message</Text></TouchableOpacity>
         </View>
     )
 }
