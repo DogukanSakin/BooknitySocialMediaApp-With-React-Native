@@ -20,6 +20,7 @@ const HomePage=({navigation})=>{
     const [userInfo,setUserInfo]=useState([]);
     const [profilePhotoURL,setProfilePhotoURL]=useState(null);
     useEffect(()=>{
+        
             database().ref('posts/').on('value', snapshot => {
             const data=snapshot.val();
             if(data!=null){

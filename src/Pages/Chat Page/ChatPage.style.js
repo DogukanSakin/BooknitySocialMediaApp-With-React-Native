@@ -35,4 +35,18 @@ export default StyleSheet.create({
         opacity:0.2,
         marginBottom:10
     },
+    messageInputStyle:{
+        fontFamily:Fonts.defaultFontFamily,
+        fontSize:15,
+        backgroundColor:Colors.defaultGreyBackgroundColor,
+        borderRadius:10,
+        paddingLeft:15,
+        flex:1,
+
+    },
+    messageInputContainer:{
+        flexDirection:'row',
+        justifyContent: 'center',
+        alignItems:'center'
+    }
 })

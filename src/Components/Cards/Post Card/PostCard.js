@@ -7,6 +7,7 @@ import { useNavigation } from '@react-navigation/native';
 import database from '@react-native-firebase/database';
 import storage from '@react-native-firebase/storage';
 const PostCard=({post,onLike})=>{
+  
     const navigation = useNavigation();
     const [imageUrl, setImageUrl] = useState(null);
     const [userInfo,setUserInfo]=useState([]);
