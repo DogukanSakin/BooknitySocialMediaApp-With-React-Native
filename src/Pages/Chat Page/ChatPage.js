@@ -14,42 +14,16 @@ const ChatPage=({route})=>{
     const [messageText,setMessageText]=useState('');
     const [messages,setMessages]=useState([]);
     const currUser=auth().currentUser;
-    const {targetUser}=route.params;
+    const {targetUser,targetUserID}=route.params;
     const navigation = useNavigation();
     useEffect(() => {
-        database().ref(`messages/${currUser.uid}/${targetUser.id}/`).on('value', snapshot => {
-            const data=snapshot.val();
-            if(data!=null){
-                const parsedData=parseMessageData(data);
-                setMessages(parsedData);   
-            }
-    
-          });    
+        
     }, []);
-   async function handleSendMessage(message){
-        try {
-            const messageData={
-                messageContent:message,
-                sender:currUser.uid,
-                date:(new Date()).toISOString()
-            }
-            setMessageText('');
-            database().ref(`messages/${currUser.uid}/${targetUser.id}/`).push(messageData);  
-            database().ref(`messages/${targetUser.id}/${currUser.uid}/`).push(messageData);  
-            database().ref(`chats/${currUser.uid}/${targetUser.id}/`).set({lastMessage:message});  
-            await database().ref(`chats/${targetUser.id}/${currUser.uid}/`).set({lastMessage:message}); 
-                
-            
-            
-           
-        } catch (error) {
-            console.log(error);
-            showMessage({
-                message: "Opps! There is an error...",
-                type: "danger",
-                titleStyle:{fontFamily:Fonts.defaultBannerFontFamily},
-              });
-        }
+   async function handleSendMessage(messageContent){
+      const messageData={
+        message:messageContent,
+        
+      }
        
     }
     const renderMessages=({item})=><MessageCard message={item}></MessageCard>
@@ -61,14 +35,14 @@ const ChatPage=({route})=>{
                     <Text style={styles.backChatText}>Back chats</Text>
                 </View>
             </TouchableWithoutFeedback>
-            <TouchableWithoutFeedback onPress={()=>navigation.navigate("Profile",{userID:targetUser.id})}>
+            <TouchableWithoutFeedback onPress={()=>navigation.navigate("Profile",{userID:targetUserID})}>
                 <View style={styles.profileInfoInnerContanier}>
                     {targetUser.profilePhotoImageURL!="" ? <Image source={{uri: targetUser.profilePhotoURL}} style={null}></Image> : <Icon name='account-question' size={25}></Icon>}
                 <Text style={styles.userNameText}>{targetUser.userName}</Text>
                 </View>
             </TouchableWithoutFeedback>
             <View style={styles.horizontalLine}/>
-            <FlatList data={messages} renderItem={renderMessages}></FlatList>
+            <FlatList ></FlatList>
             <View style={styles.messageInputContainer}>
             <TextInput value={messageText} placeholder='Messages...' style={styles.messageInputStyle} placeholderTextColor='black' multiline={true} onChangeText={(text)=>{setMessageText(text)}}></TextInput>
             <Icon name='send-circle' size={40} color={Colors.defaultColor} onPress={()=>{handleSendMessage(messageText)}}></Icon>

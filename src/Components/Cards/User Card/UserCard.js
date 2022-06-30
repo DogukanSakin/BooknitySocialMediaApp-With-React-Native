@@ -4,7 +4,10 @@ import styles from './UserCard.style';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import storage from '@react-native-firebase/storage';
 import { useNavigation } from '@react-navigation/native';
+import firestore from '@react-native-firebase/firestore';
+import auth from '@react-native-firebase/auth';
 const UserCard=({user})=>{
+    const currUser=auth().currentUser;
     const navigation = useNavigation();
     const [userProfilePhotoURL,setUserProfilePhotoURL]=useState(null);
     useEffect(()=>{
@@ -19,7 +22,11 @@ const UserCard=({user})=>{
         }
 
 
+        
+
+
     },[]);
+ 
     return(
         <View style={styles.container}>
             <View style={styles.userInfoContainer}>
@@ -30,7 +37,7 @@ const UserCard=({user})=>{
                 {user.readingBookName ? <Text style={styles.bookNameText}>{user.readingBookName}</Text> : null}
                 
             </View>
-            <TouchableOpacity style={styles.sendMessageButtonContainer} onPress={()=>navigation.navigate("Chat",{targetUser:user})}><Text style={styles.sendMessageButtonText}>Send Message</Text></TouchableOpacity>
+            <TouchableOpacity style={styles.sendMessageButtonContainer} onPress={()=>navigation.navigate("Chat",{targetUser:user,targetUserID:user.id})}><Text style={styles.sendMessageButtonText}>Send Message</Text></TouchableOpacity>
         </View>
     )
 }
