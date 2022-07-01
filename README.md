@@ -36,6 +36,10 @@ This app is a simple social media app developed using the Firebase database wher
 <img src="https://user-images.githubusercontent.com/86911611/176185649-b3a71b1e-7c2c-4c90-bb83-77c396b786e4.jpg" width="410" height="800" /><img/>
 <img src="https://user-images.githubusercontent.com/86911611/176185664-daacad0e-dac7-4b95-9e11-3c97de798bbe.jpg" width="410" height="800" /><img/>
 <img src="https://user-images.githubusercontent.com/86911611/176185681-0353d2ff-ec27-4d53-ad5d-668afa86a7a2.jpg" width="410" height="800" /><img/>
+<img src="https://user-images.githubusercontent.com/86911611/176951466-4a4bad15-41a5-4f7e-bb91-da794a6b8ae4.jpg" width="410" height="800" /><img/>
+<img src="https://user-images.githubusercontent.com/86911611/176951478-b573a716-64b0-4cd6-8bb2-b89a755ae1cb.jpg" width="410" height="800" /><img/>
+<img src="https://user-images.githubusercontent.com/86911611/176951488-3a3712fc-221f-4180-8085-03e31243d310.jpg" width="410" height="800" /><img/>
+
 ## Installation
 
 Clone this repository on your local machine.
