@@ -11,7 +11,6 @@ import { showMessage } from "react-native-flash-message";
 import Fonts from '../../Styles/Fonts';
 import parseContentData from '../../Utils/parseContentData';
 import storage from '@react-native-firebase/storage';
-import firestore from '@react-native-firebase/firestore';
 const HomePage=({navigation})=>{
     const [sendPostLoadingStatus,setSendPostLoadingStatus]=useState(false);
     const user=auth().currentUser;

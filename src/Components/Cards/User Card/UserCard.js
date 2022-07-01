@@ -4,10 +4,7 @@ import styles from './UserCard.style';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import storage from '@react-native-firebase/storage';
 import { useNavigation } from '@react-navigation/native';
-import firestore from '@react-native-firebase/firestore';
-import auth from '@react-native-firebase/auth';
 const UserCard=({user})=>{
-    const currUser=auth().currentUser;
     const navigation = useNavigation();
     const [userProfilePhotoURL,setUserProfilePhotoURL]=useState(null);
     useEffect(()=>{

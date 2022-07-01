@@ -13,7 +13,7 @@ const MessageCard=({message})=>{
     }
     return(
         <View style={styles[messageCardStyle].container}>
-            <Text style={styles[messageCardStyle].contentText}>{message.messageContent}</Text>
+            <Text style={styles[messageCardStyle].contentText}>{message.message}</Text>
         </View>
     )
 }
