@@ -113,7 +113,7 @@ const ReaderMatch=()=>{
       <View  style={styles.container}>
         {currUserData.readingBookName!="" && isUserFounded==true ?  
         <View style={styles.container}>
-            <Text style={styles.title}>You are currently reading bookName together with:</Text>
+            <Text style={styles.title}>You are currently reading {currUser.readingBookName} together with:</Text>
             <View style={styles.usersInnerContainer}>
             <View style={styles.currentUserInnerContainer}>
                 <View style={styles.imageInnerContainer}>
