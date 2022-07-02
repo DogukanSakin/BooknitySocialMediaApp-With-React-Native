@@ -1,4 +1,4 @@
-# BooknityApp (*still in development*)
+# BooknityApp 
 This app is a simple social media app developed using the Firebase database where book readers can meet and match with other readers. 
 
 ## Features
@@ -39,6 +39,9 @@ This app is a simple social media app developed using the Firebase database wher
 <img src="https://user-images.githubusercontent.com/86911611/176951466-4a4bad15-41a5-4f7e-bb91-da794a6b8ae4.jpg" width="410" height="800" /><img/>
 <img src="https://user-images.githubusercontent.com/86911611/176951478-b573a716-64b0-4cd6-8bb2-b89a755ae1cb.jpg" width="410" height="800" /><img/>
 <img src="https://user-images.githubusercontent.com/86911611/176951488-3a3712fc-221f-4180-8085-03e31243d310.jpg" width="410" height="800" /><img/>
+<img src="https://user-images.githubusercontent.com/86911611/177003291-90e24436-16f9-460d-869e-28553986b0ef.jpg" width="410" height="800" /><img/>
+
+
 
 ## Installation
 
