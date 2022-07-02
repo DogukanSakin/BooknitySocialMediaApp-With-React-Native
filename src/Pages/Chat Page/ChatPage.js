@@ -18,10 +18,12 @@ const ChatPage=({route})=>{
     const currUser=auth().currentUser;
     const {targetUser,targetUserID}=route.params;
     const navigation = useNavigation();
-    let chatIDModalA=currUser.uid+targetUserID;
-    let chatIDModalB=targetUserID+currUser.uid;
+ 
+   
     let isChatDataFetched;
     useEffect(() => {
+        let chatIDModalA=currUser.uid+targetUserID;
+        let chatIDModalB=targetUserID+currUser.uid;
         isChatDataFetched=false;
         fetchChatData(chatIDModalA);
         if(isChatDataFetched==false){
@@ -39,37 +41,37 @@ const ChatPage=({route})=>{
         });
         
     }
-    async function sendMessageWithModal(modal,content){
-
-    }
-   function handleSendMessage(messageContent){
-    let isSendedMessage=false;
+    function handleSendMessage(messageContent){
       try {
+        let isSendedMessage=false;
+        let chatIDModalA=currUser.uid+targetUserID;
+        let chatIDModalB=targetUserID+currUser.uid;
         const messageData={
-            message:messageContent,
-            sender: currUser.uid,
-            date: (new Date()).toISOString(),
-          }
-         database().ref(`messages/`)
+          message:messageContent,
+          sender: currUser.uid,
+          date: (new Date()).toISOString(),
+        }
+        database().ref(`messages`)
+          .orderByKey(`messages/${chatIDModalA}/`)
             .equalTo(chatIDModalA)
             .once('value')
             .then(snapshot => {
               if (snapshot.exists()) {
                 setMessageText('');
-                database().ref(`messages/${chatIDModalA}/`).push(messageData);  
+                database().ref(`messages/${chatIDModalA}`).push(messageData);  
                 isSendedMessage=true;
-                console.log("send A");
               } 
               else{
-                database().ref(`messages/`)
-                .equalTo(chatIDModalB)
+                database().ref(`messages`)
+                .orderByKey(`messages/${chatIDModalB}`)
+                .equalTo(`${chatIDModalB}`)
                 .once('value')
                 .then(snapshot => {
                   if (snapshot.exists()) {
                     database().ref(`messages/${chatIDModalB}/`).push(messageData);  
                     isSendedMessage=true;
                     setMessageText('');
-                    console.log("send B");
+                 
                   } 
                   else{
                     if(isSendedMessage==false){
@@ -78,7 +80,7 @@ const ChatPage=({route})=>{
                       database().ref(`users/${currUser.uid}/chats/`).push({id:targetUserID});  
                       database().ref(`users/${targetUserID}/chats/`).push({id:currUser.uid});
                       isSendedMessage=true; 
-                      console.log("first message sended");
+                      
                     }
                    
                   }
