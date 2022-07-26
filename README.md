@@ -22,6 +22,7 @@ This app is a simple social media app developed using the Firebase database wher
 - [React Native Image Picker](https://github.com/react-native-image-picker/react-native-image-picker) for select and upload images
 
 ## Real Android Device ScreenShots
+<div align="center">
 <img src="https://user-images.githubusercontent.com/86911611/176185221-b552405d-5e26-4be8-b693-12f1a4ba3340.jpg" width="410" height="800" /><img/>
 <img src="https://user-images.githubusercontent.com/86911611/176185430-7a9532e9-d34a-4d18-9425-301c24a05baa.jpg" width="410" height="800" /><img/>
 <img src="https://user-images.githubusercontent.com/86911611/176185535-80cabfbe-9c33-4974-91ec-1d09380229d6.jpg" width="410" height="800" /><img/>
@@ -40,7 +41,7 @@ This app is a simple social media app developed using the Firebase database wher
 <img src="https://user-images.githubusercontent.com/86911611/176951478-b573a716-64b0-4cd6-8bb2-b89a755ae1cb.jpg" width="410" height="800" /><img/>
 <img src="https://user-images.githubusercontent.com/86911611/176951488-3a3712fc-221f-4180-8085-03e31243d310.jpg" width="410" height="800" /><img/>
 <img src="https://user-images.githubusercontent.com/86911611/177003291-90e24436-16f9-460d-869e-28553986b0ef.jpg" width="410" height="800" /><img/>
-
+</div>
 
 
 ## Installation
